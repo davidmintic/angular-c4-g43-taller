@@ -3,12 +3,36 @@
     style="display: flex; justify-content: space-between; align-items: center"
   >
     <h3>Bienvenidos al curso de angular</h3>
-    <input type="text" placeholder="Buscar" [(ngModel)]="campoBuscar" />
-    <button (click)="getUsuariosFilter()">Buscar</button>
-    <cambio-contrasenia
+
+    <div>
+      <input
+        type="text"
+        style="margin-right: 10px"
+        placeholder="Buscar"
+        [(ngModel)]="campoBuscar"
+      />
+      <button (click)="getUsuariosFilter()">Buscar</button>
+    </div>
+
+    <!-- <cambio-contrasenia
       [user]="userCurrent"
       (cambioNombre)="updateUserName($event)"
-    ></cambio-contrasenia>
+    ></cambio-contrasenia> -->
+
+    <div>
+      <label for="">Sede: </label>
+      <select
+        name=""
+        id=""
+        style="width: 180px"
+        [(ngModel)]="sedeCurrent"
+        (change)="changeSede()"
+      >
+        <option [value]="sede.idSede" *ngFor="let sede of sedes">
+          {{ sede.nombre }}
+        </option>
+      </select>
+    </div>
   </div>
 
   <hr />

@@ -24,27 +24,30 @@ export class CrudUsuariosComponent implements OnInit {
 
   campoBuscar = '';
   listOfData: Person[] = [];
+  sedes: any = [];
+  sedeCurrent = '';
   formUser: FormGroup = new FormGroup({});
 
   constructor(
     private requestBack: RequestBackendService,
     private fb: FormBuilder
   ) {
-    this.getUsuarios();
+    this.getSedes();
 
     this.formUser = this.fb.group({
       nombre: [''],
       telefono: [],
       fechaNacimiento: [new Date()],
       contrasenia: ['111'],
-      sedeId: ['63543ee13188338244410010'],
+      sedeId: [''],
     });
   }
 
   ngOnInit(): void {}
 
-  getUsuarios() {
-    this.requestBack.getData('usuarios').subscribe({
+  getUsuarios(sede: string) {
+    const entity = 'sedes/' + sede + '/usuarios';
+    this.requestBack.getData(entity).subscribe({
       next: (data) => {
         console.log('next');
         this.listOfData = data;
@@ -52,6 +55,23 @@ export class CrudUsuariosComponent implements OnInit {
       error: (error) => {
         console.log('error: ' + error);
         this.listOfData = [];
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
+
+  getSedes() {
+    this.requestBack.getData('sedes').subscribe({
+      next: (data) => {
+        this.sedes = data;
+        this.sedeCurrent = data[0].idSede;
+        this.getUsuarios(this.sedeCurrent);
+      },
+      error: (error) => {
+        console.log('error: ' + error);
+        this.sedes = [];
       },
       complete: () => {
         console.log('complete');
@@ -107,6 +127,8 @@ export class CrudUsuariosComponent implements OnInit {
   saveUser(): void {
     const datosUser = this.formUser.getRawValue();
     datosUser['fechaNacimiento'] = new Date(datosUser['fechaNacimiento']);
+    datosUser['sedeId'] = this.sedeCurrent;
+
     this.requestBack.addData('usuarios', JSON.stringify(datosUser)).subscribe({
       next: (data) => {
         console.log(data);
@@ -147,5 +169,9 @@ export class CrudUsuariosComponent implements OnInit {
         console.log('complete');
       },
     });
+  }
+
+  changeSede(): void {
+    this.getUsuarios(this.sedeCurrent);
   }
 }
