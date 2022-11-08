@@ -1,0 +1,24 @@
+<!-- <p>{{ titulo }}</p> -->
+
+<div>
+  <nz-space>
+    <input
+      *nzSpaceItem
+      type="number"
+      (blur)="func()"
+      placeholder="Ingrese edad"
+      [(ngModel)]="edad"
+    />
+    <button *nzSpaceItem (click)="changeCount()" nz-button nzType="primary">
+      Aumentar
+    </button>
+  </nz-space>
+
+  <div>
+    <span [ngClass]="{ 'cls-mayor': edad >= 18, 'cls-menor': edad < 18 }"
+      >Es {{ edad >= 18 ? "mayor" : "menor" }} de edad</span
+    >
+  </div>
+</div>
+
+<cambio-contrasenia></cambio-contrasenia>
