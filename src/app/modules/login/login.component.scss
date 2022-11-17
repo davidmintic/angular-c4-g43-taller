@@ -1,0 +1,10 @@
+.content-login {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 240px);
+    align-items: center;
+
+    .login-form {
+        width: 350px;
+    }
+}

@@ -1,20 +1,20 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class RequestBackendService {
-  url = 'http://[::1]:3000/';
+  url = "http://[::1]:3000/";
 
   constructor(private http: HttpClient) {}
 
   getData(entidad: string, filter?: string): Observable<any> {
     if (filter) {
       // {"where": {"nombre": {"like": "p", "options": "i"}} }
-      const where = { where: { nombre: { like: filter, options: 'i' } } };
-      const params = new HttpParams().append('filter', JSON.stringify(where));
+      const where = { where: { nombre: { like: filter, options: "i" } } };
+      const params = new HttpParams().append("filter", JSON.stringify(where));
       const httpOptions = {
         // header
         params,
@@ -30,19 +30,19 @@ export class RequestBackendService {
     // const params = new HttpParams().append('filter', JSON.stringify(where));
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-type': 'application/json;charset=utf-8',
+        "Content-type": "application/json;charset=utf-8",
       }),
       // params,
     };
 
-    const urlEdit = this.url + entidad + '/' + key;
+    const urlEdit = this.url + entidad + "/" + key;
     return this.http.put(urlEdit, data, httpOptions);
   }
 
   addData(entidad: string, data: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-type': 'application/json;charset=utf-8',
+        "Content-type": "application/json;charset=utf-8",
       }),
       // params,
     };
@@ -52,7 +52,7 @@ export class RequestBackendService {
   }
 
   deleteData(entidad: string, code: string): Observable<any> {
-    const urlDelete = this.url + entidad + '/' + code;
+    const urlDelete = this.url + entidad + "/" + code;
     return this.http.delete(urlDelete);
   }
 }
