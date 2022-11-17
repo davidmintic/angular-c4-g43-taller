@@ -55,4 +55,16 @@ export class RequestBackendService {
     const urlDelete = this.url + entidad + "/" + code;
     return this.http.delete(urlDelete);
   }
+
+  posData(entidad: string, data: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-type": "application/json;charset=utf-8",
+      }),
+      // params,
+    };
+
+    const urlEdit = this.url + entidad;
+    return this.http.post(urlEdit, data, httpOptions);
+  }
 }
